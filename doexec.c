@@ -37,7 +37,7 @@ typedef struct {
     //
     SOCKET  ClientSocket;
     HANDLE  ReadShellThreadHandle;  // Handle to session shell-read thread
-    HANDLE  WriteShellThreadHandle; // Handle to session shell-read thread
+    HANDLE  WriteShellThreadHandle; // Handle to session shell-write thread
 
 } SESSION_DATA, *PSESSION_DATA;
 
@@ -231,7 +231,7 @@ doexec(
         //
         Session->ClientSocket = INVALID_SOCKET;
 
-        TerminateThread(Session->WriteShellThreadHandle, 0);
+        TerminateThread(Session->ReadShellThreadHandle, 0);
         return(FALSE);
     }
 
